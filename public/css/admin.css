@@ -1,0 +1,216 @@
+/* =========================================
+   ADMIN LAYOUT
+========================================= */
+
+.admin-body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f8fafc;
+    font-family: "Figtree", sans-serif;
+}
+
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.admin-sidebar {
+    width: 270px;
+    min-width: 270px;
+    min-height: 100vh;
+
+    background: #173F7A;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-brand {
+    padding: 28px 24px;
+}
+
+.admin-brand-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.admin-logo-wrapper {
+    width: 64px;
+    height: 64px;
+
+    background: #FFF4D6;
+    border-radius: 999px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.admin-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.admin-brand-title {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.admin-nav {
+    padding: 0 16px;
+}
+
+.admin-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 14px 16px;
+
+    border-radius: 8px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: background-color 0.2s ease;
+}
+
+.admin-nav-link:hover {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.admin-nav-link.active {
+    background: #2868C7;
+}
+
+.admin-nav-icon {
+    width: 24px;
+    height: 24px;
+
+    flex-shrink: 0;
+}
+
+.admin-divider {
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.20);
+
+    margin: 24px 16px;
+}
+
+
+/* =========================================
+   LOGOUT BUTTON
+========================================= */
+
+.admin-logout {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 14px 16px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-align: left;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.admin-logout:hover {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.admin-main {
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+
+    background: #f8fafc;
+}
+
+.admin-content {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1024px) {
+
+    .admin-sidebar {
+        width: 240px;
+        min-width: 240px;
+    }
+
+    .admin-content {
+        padding: 30px;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .admin-wrapper {
+        display: block;
+    }
+
+    .admin-sidebar {
+        display: none;
+    }
+
+    .admin-main {
+        width: 100%;
+    }
+
+    .admin-content {
+        padding: 24px;
+    }
+}
