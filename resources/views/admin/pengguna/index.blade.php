@@ -445,35 +445,19 @@
                                 {{-- ROLE --}}
                                 <td class="px-4 py-3">
 
-                                    @if(($pengguna->role ?? 'User') === 'Admin')
-
-                                        <span class="inline-block
-                                                     px-2 py-1
-                                                     rounded-sm
-                                                     bg-blue-100
-                                                     text-blue-600
-                                                     text-[9px]
-                                                     font-semibold">
-
-                                            Admin
-
-                                        </span>
-
-                                    @else
-
-                                        <span class="inline-block
-                                                     px-2 py-1
-                                                     rounded-sm
-                                                     bg-green-100
-                                                     text-green-600
-                                                     text-[9px]
-                                                     font-semibold">
-
-                                            User
-
-                                        </span>
-
-                                    @endif
+                                    @if($pengguna->role == 'Super Admin')
+    <span class="px-3 py-1 rounded text-xs bg-purple-100 text-purple-700">
+        Super Admin
+    </span>
+@elseif($pengguna->role == 'Admin')
+    <span class="px-3 py-1 rounded text-xs bg-blue-100 text-blue-700">
+        Admin
+    </span>
+@else
+    <span class="px-3 py-1 rounded text-xs bg-green-100 text-green-700">
+        User
+    </span>
+@endif
 
                                 </td>
 

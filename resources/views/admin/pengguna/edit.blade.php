@@ -5,8 +5,13 @@
 <div class="flex min-h-screen">
 
     {{-- SIDEBAR --}}
-    <aside class="w-[270px] bg-[#173F7A] text-white flex-shrink-0 hidden lg:flex flex-col">
+    <aside
+        id="sidebar"
+        class="w-[270px] bg-[#173F7A] text-white flex-shrink-0
+               hidden lg:flex flex-col
+               transition-all duration-300 ease-in-out">
 
+        {{-- LOGO --}}
         <div class="px-6 py-7">
 
             <div class="flex items-center gap-4">
@@ -15,18 +20,19 @@
                             flex items-center justify-center overflow-hidden">
 
                     <img
-                        src="{{ asset('images/logo.jpg') }}"
-                        class="w-12 h-12 object-contain"
-                    >
+        src="{{ asset('images/logo.jpeg') }}"
+        alt="SMKN 4 Bogor"
+        class="w-10 h-10 rounded-full object-cover"
+    >
 
                 </div>
 
                 <div>
-                    <h1 class="font-bold text-[17px]">
+                    <h1 class="font-bold text-[17px] leading-tight">
                         SMKN 4
                     </h1>
 
-                    <p class="font-bold text-[17px]">
+                    <p class="font-bold text-[17px] leading-tight">
                         BOGOR DIGITAL
                     </p>
                 </div>
@@ -36,31 +42,85 @@
         </div>
 
 
+        {{-- MENU ATAS --}}
         <nav class="px-4 space-y-2">
 
+            {{-- DASHBOARD --}}
             <a href="{{ route('admin.dashboard') }}"
-               class="flex items-center gap-4 px-4 py-3.5 rounded-lg hover:bg-white/10 font-semibold">
+               class="flex items-center gap-4 px-4 py-3.5
+                      rounded-lg hover:bg-white/10 font-semibold">
 
-                <span class="text-xl">⌂</span>
-                Dashboard
+                <svg class="w-6 h-6"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     viewBox="0 0 24 24">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/>
+
+                </svg>
+
+                <span>Dashboard</span>
 
             </a>
 
 
+            {{-- ARTIKEL --}}
             <a href="{{ route('admin.artikel.index') }}"
-               class="flex items-center gap-4 px-4 py-3.5 rounded-lg hover:bg-white/10 font-semibold">
+               class="flex items-center gap-4 px-4 py-3.5
+                      rounded-lg hover:bg-white/10 font-semibold">
 
-                <span class="text-xl">▤</span>
-                Informasi / Artikel
+                <svg class="w-6 h-6"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     viewBox="0 0 24 24">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M8 8h8M8 12h8M8 16h5"/>
+
+                </svg>
+
+                <span>Informasi / Artikel</span>
 
             </a>
 
 
+            {{-- GALERI --}}
             <a href="{{ route('admin.galeri.index') }}"
-               class="flex items-center gap-4 px-4 py-3.5 rounded-lg hover:bg-white/10 font-semibold">
+               class="flex items-center gap-4 px-4 py-3.5
+                      rounded-lg hover:bg-white/10 font-semibold">
 
-                <span class="text-xl">▣</span>
-                Galeri
+                <svg class="w-6 h-6"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     viewBox="0 0 24 24">
+
+                    <rect x="3"
+                          y="4"
+                          width="18"
+                          height="16"
+                          rx="2"/>
+
+                    <circle cx="8.5"
+                            cy="9"
+                            r="1.5"/>
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M21 15l-5-5L5 20"/>
+
+                </svg>
+
+                <span>Galeri</span>
 
             </a>
 
@@ -70,18 +130,40 @@
         <div class="border-t border-white/20 mx-4 my-6"></div>
 
 
+        {{-- MENU BAWAH --}}
         <nav class="px-4 space-y-2">
 
+            {{-- PENGGUNA AKTIF --}}
             <a href="{{ route('admin.pengguna.index') }}"
                class="flex items-center gap-4 px-4 py-3.5
                       rounded-lg bg-[#2868C7] font-semibold">
 
-                <span class="text-xl">♙</span>
-                Pengguna
+                <svg class="w-6 h-6"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     viewBox="0 0 24 24">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+
+                    <circle cx="9"
+                            cy="7"
+                            r="4"/>
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+
+                </svg>
+
+                <span>Pengguna</span>
 
             </a>
 
 
+            {{-- KELUAR --}}
             <form method="POST" action="{{ route('logout') }}">
 
                 @csrf
@@ -91,8 +173,23 @@
                            rounded-lg hover:bg-white/10
                            font-semibold text-left">
 
-                    <span class="text-xl">↪</span>
-                    Keluar
+                    <svg class="w-6 h-6"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         viewBox="0 0 24 24">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M10 17l5-5-5-5M15 12H3"/>
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M21 19V5a2 2 0 00-2-2h-6"/>
+
+                    </svg>
+
+                    <span>Keluar</span>
 
                 </button>
 
@@ -232,21 +329,26 @@
                             </label>
 
                             <select
-                                name="role"
-                                class="w-full border border-gray-200
-                                       rounded-md px-3 py-2.5 text-xs mb-5">
+    name="role"
+    class="w-full border border-gray-200
+           rounded-md px-3 py-2.5 text-xs mb-5">
 
-                                <option value="Admin"
-                                    {{ old('role', $pengguna->role) == 'Admin' ? 'selected' : '' }}>
-                                    Admin
-                                </option>
+    <option value="Super Admin"
+    {{ old('role', $pengguna->role) == 'Super Admin' ? 'selected' : '' }}>
+    Super Admin
+</option>
 
-                                <option value="User"
-                                    {{ old('role', $pengguna->role) == 'User' ? 'selected' : '' }}>
-                                    User
-                                </option>
+    <option value="Admin"
+        {{ old('role', $pengguna->role) == 'Admin' ? 'selected' : '' }}>
+        Admin
+    </option>
 
-                            </select>
+    <option value="User"
+        {{ old('role', $pengguna->role) == 'User' ? 'selected' : '' }}>
+        User
+    </option>
+
+</select>
 
 
                             <label class="block text-xs font-semibold mb-3">

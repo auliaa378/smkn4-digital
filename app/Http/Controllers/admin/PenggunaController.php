@@ -38,7 +38,7 @@ class PenggunaController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
-            'role' => 'required|in:Admin,User',
+            'role' => 'required|in:Super Admin,Admin,User',
             'status' => 'required|in:Aktif,Nonaktif',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -81,7 +81,7 @@ class PenggunaController extends Controller
                 Rule::unique('users', 'email')->ignore($pengguna->id),
             ],
 
-            'role' => 'required|in:Admin,User',
+            'role' => 'required|in:Super Admin,Admin,User',
             'status' => 'required|in:Aktif,Nonaktif',
 
             'password' => 'nullable|string|min:8|confirmed',

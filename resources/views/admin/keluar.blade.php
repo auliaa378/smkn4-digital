@@ -16,7 +16,7 @@
                 <div class="w-16 h-16 bg-[#FFF4D6] rounded-full
                             flex items-center justify-center overflow-hidden flex-shrink-0">
 
-                    <img src="{{ asset('images/logo.jpg') }}"
+                    <img src="{{ asset('images/logo.jpeg') }}"
                          class="w-12 h-12 object-contain">
 
                 </div>

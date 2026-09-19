@@ -16,7 +16,7 @@
                             flex items-center justify-center overflow-hidden">
 
                     <img
-                        src="{{ asset('images/logo.jpg') }}"
+                        src="{{ asset('images/logo.jpeg') }}"
                         class="w-12 h-12 object-contain"
                     >
 
@@ -199,9 +199,27 @@
         <div class="px-10 py-8">
 
             {{-- BREADCRUMB --}}
-            <p class="text-xs text-gray-400 mb-3">
-                Dashboard / Galeri / Edit Galeri
-            </p>
+        <div class="flex items-center gap-2 text-xs text-gray-500 mb-6">
+
+            <a href="{{ route('admin.dashboard') }}"
+               class="hover:text-blue-600">
+                Dashboard
+            </a>
+
+            <span>/</span>
+
+            <a href="{{ route('admin.galeri.index') }}"
+               class="hover:text-blue-600">
+                Galeri
+            </a>
+
+            <span>/</span>
+
+            <span class="text-gray-400">
+                Edit Galeri
+            </span>
+
+        </div>
 
 
             {{-- JUDUL --}}
