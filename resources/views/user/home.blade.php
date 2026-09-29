@@ -864,4 +864,284 @@
 
 </section>
 
+{{-- ========================================================= --}}
+{{-- KOMENTAR & RATING PENGUNJUNG --}}
+{{-- ========================================================= --}}
+
+<section id="komentar" class="max-w-[1400px] mx-auto px-8 pb-20">
+
+    <div class="bg-[#F1F1F1] rounded-2xl px-8 py-8">
+
+        {{-- JUDUL --}}
+        <div class="mb-7">
+
+            <h3 class="text-xl font-semibold text-[#173F7A]">
+                Berikan Penilaian & Komentar
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Sampaikan penilaian dan pendapat kamu mengenai SMKN 4 Kota Bogor.
+            </p>
+
+        </div>
+
+
+        {{-- SUCCESS --}}
+        @if (session('success'))
+
+            <div class="bg-green-100 text-green-700
+                        text-sm rounded-lg px-4 py-3 mb-5">
+
+                {{ session('success') }}
+
+            </div>
+
+        @endif
+
+
+        {{-- ERROR --}}
+        @if ($errors->any())
+
+            <div class="bg-red-100 text-red-700
+                        text-sm rounded-lg px-4 py-3 mb-5">
+
+                {{ $errors->first() }}
+
+            </div>
+
+        @endif
+
+
+        {{-- FORM --}}
+        <form action="{{ route('komentar.store') }}" method="POST">
+
+            @csrf
+
+
+            {{-- NAMA --}}
+            <div class="mb-5">
+
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Nama
+                </label>
+
+                <input
+                    type="text"
+                    name="nama"
+                    value="{{ old('nama') }}"
+                    placeholder="Masukkan nama kamu"
+                    class="w-full
+                           border border-gray-300
+                           rounded-lg
+                           px-4 py-3
+                           text-sm
+                           focus:outline-none
+                           focus:ring-2
+                           focus:ring-[#4A79FF]"
+                    required
+                >
+
+            </div>
+
+
+            {{-- RATING --}}
+<div class="mb-5">
+
+    <label class="block text-sm font-medium text-gray-700 mb-3">
+        Rating
+    </label>
+
+    <div class="flex items-center gap-1" id="rating">
+
+        @for ($i = 1; $i <= 5; $i++)
+
+            <input
+                type="radio"
+                name="rating"
+                id="rating{{ $i }}"
+                value="{{ $i }}"
+                class="hidden"
+                required
+            >
+
+            <label
+                for="rating{{ $i }}"
+                class="star text-3xl text-gray-300 cursor-pointer transition"
+                data-rating="{{ $i }}"
+            >
+                ★
+            </label>
+
+        @endfor
+
+    </div>
+
+    <p class="text-xs text-gray-400 mt-2">
+        Berikan rating dari 1 sampai 5 bintang.
+    </p>
+
+</div>
+
+
+            {{-- KOMENTAR --}}
+            <div class="mb-5">
+
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Komentar
+                </label>
+
+                <textarea
+                    name="komentar"
+                    rows="5"
+                    placeholder="Tulis komentar kamu..."
+                    class="w-full
+                           border border-gray-300
+                           rounded-lg
+                           px-4 py-3
+                           text-sm
+                           resize-none
+                           focus:outline-none
+                           focus:ring-2
+                           focus:ring-[#4A79FF]"
+                    required
+                >{{ old('komentar') }}</textarea>
+
+            </div>
+
+
+            {{-- BUTTON --}}
+            <button
+                type="submit"
+                class="bg-[#173F7A]
+                       hover:bg-blue-800
+                       text-white
+                       px-6 py-3
+                       rounded-lg
+                       text-sm
+                       font-medium
+                       transition"
+            >
+                Kirim Penilaian
+            </button>
+
+        </form>
+
+        {{-- ================= KOMENTAR PENGUNJUNG ================= --}}
+
+<div class="mt-10">
+
+    <h3 class="text-lg font-semibold text-[#173F7A] mb-5">
+        Penilaian & Komentar Pengunjung
+    </h3>
+
+    <div class="space-y-4">
+
+        @forelse ($komentars as $komentar)
+
+            <div class="bg-white
+                        border border-gray-200
+                        rounded-xl
+                        px-5 py-4
+                        shadow-sm">
+
+                {{-- NAMA + RATING --}}
+                <div class="flex items-center justify-between mb-2">
+
+                    <p class="font-semibold text-gray-800">
+                        {{ $komentar->nama }}
+                    </p>
+
+                    <div class="flex items-center gap-1">
+
+                        @for ($i = 1; $i <= 5; $i++)
+
+                            @if ($i <= $komentar->rating)
+
+                                <span class="text-yellow-400 text-lg">
+                                    ★
+                                </span>
+
+                            @else
+
+                                <span class="text-gray-300 text-lg">
+                                    ★
+                                </span>
+
+                            @endif
+
+                        @endfor
+
+                    </div>
+
+                </div>
+
+
+                {{-- KOMENTAR --}}
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    {{ $komentar->komentar }}
+                </p>
+
+
+                {{-- TANGGAL --}}
+                <p class="text-xs text-gray-400 mt-3">
+                    {{ $komentar->created_at->format('d/m/Y') }}
+                </p>
+
+            </div>
+
+        @empty
+
+            <div class="bg-white
+                        border border-gray-200
+                        rounded-xl
+                        px-5 py-8
+                        text-center">
+
+                <p class="text-sm text-gray-400">
+                    Belum ada komentar.
+                </p>
+
+            </div>
+
+        @endforelse
+
+    </div>
+
+</div>
+
+    </div>
+
+</section>
+
+<script>
+    const stars = document.querySelectorAll('.star');
+    const ratingInputs = document.querySelectorAll('input[name="rating"]');
+
+    stars.forEach(star => {
+
+        star.addEventListener('click', function () {
+
+            const rating = this.dataset.rating;
+
+            ratingInputs.forEach(input => {
+                input.checked = input.value == rating;
+            });
+
+            stars.forEach(item => {
+
+                if (item.dataset.rating <= rating) {
+                    item.classList.remove('text-gray-300');
+                    item.classList.add('text-yellow-400');
+                } else {
+                    item.classList.remove('text-yellow-400');
+                    item.classList.add('text-gray-300');
+                }
+
+            });
+
+        });
+
+    });
+</script>
+
 @endsection

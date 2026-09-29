@@ -5,11 +5,19 @@
 @php
     use App\Models\Artikel;
     use App\Models\Galeri;
+    use App\Models\Komentar;
 
 
     $totalArtikel = Artikel::count();
     $totalGaleri = Galeri::count();
     $totalPengguna = \App\Models\User::count();
+
+    $komentarBaru = Komentar::where('dibaca', false)
+        ->latest()
+        ->take(5)
+        ->get();
+
+    $totalKomentarBaru = Komentar::where('dibaca', false)->count();
 
     $aktivitas = Artikel::latest('created_at')
         ->take(5)
@@ -330,6 +338,179 @@
 
                     {{-- PROFILE --}}
                     <div class="flex items-center gap-3 flex-shrink-0">
+
+                    {{-- NOTIFIKASI KOMENTAR --}}
+<div class="relative">
+
+    <button
+        type="button"
+        onclick="document.getElementById('notification-menu').classList.toggle('hidden')"
+        class="relative w-10 h-10
+               flex items-center justify-center
+               rounded-full
+               hover:bg-gray-100
+               transition"
+    >
+
+        <svg
+            class="w-6 h-6 text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+        >
+
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 17h5l-1.5-1.5A2 2 0 0118 14V10a6 6 0 00-12 0v4a2 2 0 01-.5 1.5L4 17h5"
+            />
+
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10 21h4"
+            />
+
+        </svg>
+
+
+        @if ($totalKomentarBaru > 0)
+
+            <span
+                class="absolute -top-1 -right-1
+                       min-w-[18px] h-[18px]
+                       px-1
+                       bg-red-500
+                       text-white
+                       text-[9px]
+                       font-bold
+                       rounded-full
+                       flex items-center justify-center"
+            >
+                {{ $totalKomentarBaru > 9 ? '9+' : $totalKomentarBaru }}
+            </span>
+
+        @endif
+
+    </button>
+
+
+    {{-- DROPDOWN --}}
+    <div
+        id="notification-menu"
+        class="hidden absolute right-0 top-12
+               w-80
+               bg-white
+               rounded-xl
+               border border-gray-200
+               shadow-lg
+               z-50"
+    >
+
+        <div class="px-4 py-3 border-b border-gray-100">
+
+            <h3 class="font-semibold text-gray-800 text-sm">
+                Komentar Terbaru
+            </h3>
+
+            <p class="text-[10px] text-gray-400 mt-1">
+                Komentar dari pengunjung website
+            </p>
+
+        </div>
+
+
+        <div class="max-h-80 overflow-y-auto">
+
+            @forelse ($komentarBaru as $komentar)
+
+    <div class="px-4 py-3 border-b border-gray-100 hover:bg-gray-50">
+
+        {{-- NAMA + WAKTU --}}
+        <div class="flex items-center justify-between gap-3">
+
+            <p class="text-sm font-semibold text-gray-800">
+                {{ $komentar->nama }}
+            </p>
+
+            <span class="text-[9px] text-gray-400">
+                {{ $komentar->created_at->diffForHumans() }}
+            </span>
+
+        </div>
+
+
+        {{-- RATING --}}
+        <div class="flex mt-1">
+
+            @for ($i = 1; $i <= 5; $i++)
+
+                @if ($i <= $komentar->rating)
+
+                    <span class="text-yellow-400 text-xs">
+                        ★
+                    </span>
+
+                @else
+
+                    <span class="text-gray-300 text-xs">
+                        ★
+                    </span>
+
+                @endif
+
+            @endfor
+
+        </div>
+
+
+        {{-- KOMENTAR --}}
+        <p class="text-xs text-gray-500 mt-1 leading-relaxed">
+            {{ $komentar->komentar }}
+        </p>
+
+
+        {{-- HAPUS --}}
+        <form
+            action="{{ route('admin.pesan.destroy', $komentar->id) }}"
+            method="POST"
+            class="mt-2"
+            onsubmit="return confirm('Yakin ingin menghapus komentar ini?')"
+        >
+
+            @csrf
+
+            @method('DELETE')
+
+            <button
+                type="submit"
+                class="text-xs text-red-500 hover:text-red-700 font-medium"
+            >
+                Hapus komentar
+            </button>
+
+        </form>
+
+    </div>
+
+@empty
+
+    <div class="px-4 py-8 text-center">
+
+        <p class="text-sm text-gray-400">
+            Belum ada komentar baru.
+        </p>
+
+    </div>
+
+@endforelse
+
+        </div>
+
+    </div>
+
+</div>
 
                         <div
                             class="w-9 h-9 rounded-full

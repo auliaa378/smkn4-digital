@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\PenggunaController;
+use App\Http\Controllers\KomentarController;
+use App\Models\Komentar;
 use App\Models\Artikel;
 use App\Models\Galeri;
 use App\Http\Middleware\TrackVisitor;
@@ -15,24 +17,20 @@ use App\Http\Middleware\TrackVisitor;
 // ============================================================
 
 Route::get('/', function () {
-
-    // 3 artikel terbaru
-    $artikels = Artikel::latest('tanggal')
-        ->take(3)
-        ->get();
-
-    // 4 galeri terbaru yang aktif
-    $galeris = Galeri::where('status', 'Aktif')
-        ->latest()
-        ->take(4)
-        ->get();
+    $artikels = Artikel::latest('tanggal')->take(3)->get();
+    $galeris = Galeri::where('status', 'Aktif')->latest()->take(4)->get();
+    $komentars = Komentar::latest()->take(5)->get();
 
     return view('user.home', compact(
         'artikels',
-        'galeris'
+        'galeris',
+        'komentars'
     ));
-
 })->middleware(TrackVisitor::class)->name('home');
+
+// KOMENTAR PENGUNJUNG
+Route::post('/komentar', [KomentarController::class, 'store'])
+    ->name('komentar.store');
 
 
 // ============================================================
@@ -114,6 +112,7 @@ Route::get('/detail-jurusan-tkro', function () {
 })->name('detail.tkro');
 
 
+
 // ============================================================
 // LOGIN ADMIN
 // ============================================================
@@ -148,6 +147,19 @@ Route::middleware('auth')->group(function () {
         ));
 
     })->name('admin.dashboard');
+
+
+    // ========================================================
+// KOMENTAR PENGUNJUNG
+// ========================================================
+
+Route::delete('/admin/pesan/{komentar}', function (Komentar $komentar) {
+
+    $komentar->delete();
+
+    return back()->with('success', 'Komentar berhasil dihapus.');
+
+})->name('admin.pesan.destroy');
 
 
     // ========================================================
